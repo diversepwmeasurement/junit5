@@ -1,16 +1,14 @@
-name: Combine PRs
-
-on:
-  schedule:
-    - cron: '0 0 * * *' # Every day at 00:00 UTC
-  workflow_dispatch:
-
 jobs:
   combine-prs:
     if: github.repository == 'junit-team/junit5'
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
-      - name: combine-prs
-        uses: github/combine-prs@v5.0.0
-        with:
-          github_token: ${{ secrets.GH_TOKEN }}
+    - continue-on-error: true
+      name: combine-prs
+      uses: github/combine-prs@v5.0.0
+      with:
+        github_token: ${{ secrets.GH_TOKEN }}
+name: Combine PRs
+on:
+  repository_dispatch:
+    types: trigger-ga___combine-prs.yml

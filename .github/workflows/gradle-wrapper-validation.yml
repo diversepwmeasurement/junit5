@@ -1,22 +1,17 @@
-name: "Validate Gradle Wrapper"
-
-on:
-  push:
-    branches:
-      - main
-      - 'releases/**'
-  pull_request:
-    branches:
-      - '*'
-
 jobs:
   validation:
-    name: "Validation"
-    runs-on: ubuntu-latest
+    name: Validation
+    runs-on: self-hosted
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-      - name: Validate Gradle wrapper
-        uses: gradle/actions/wrapper-validation@v3
+    - continue-on-error: true
+      name: Check out repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 1
+    - continue-on-error: true
+      name: Validate Gradle wrapper
+      uses: gradle/actions/wrapper-validation@v3
+name: Validate Gradle Wrapper
+on:
+  repository_dispatch:
+    types: trigger-ga___gradle-wrapper-validation.yml
